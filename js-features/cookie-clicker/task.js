@@ -2,8 +2,8 @@
 
 const clicker = document.getElementById("cookie");
 
-clicker.addEventListener("click", function(event){
+clicker.addEventListener("click", function(){
     const counter = document.getElementById("clicker__counter"); 
     counter.textContent++;
-    console.log(counter.textContent);
+    (counter.textContent % 2) ? this.width /= 2 : this.width *= 2;   
 });
