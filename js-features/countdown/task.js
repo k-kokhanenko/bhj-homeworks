@@ -15,13 +15,24 @@ let timerId = setInterval(
 */
 
 // #1
+function formatDate(date) {
+    function addZero(num) {
+        if (num < 10) {
+            return "0".num;
+        }
+        return num;
+    }
+
+    return `${addZero(date.getHours())}:${addZero(date.getMinutes())}:${addZero(date.getSeconds())}`;
+}
+
 const currentDate = new Date();
-timer.textContent = `${currentDate.getHours()}:${currentDate.getMinutes()}:${currentDate.getSeconds()}`;
+timer.textContent = formatDate(currentDate);
 
 let timerId = setInterval(
     () => {
         currentDate.setSeconds(currentDate.getSeconds() - 1);
-        timer.textContent = `${currentDate.getHours()}:${currentDate.getMinutes()}:${currentDate.getSeconds()}`;
+        timer.textContent = formatDate(currentDate);
 
         if (currentDate.getTime() == 0) {
             alert("Вы победили в конкурсе!");
