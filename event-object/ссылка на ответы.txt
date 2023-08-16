@@ -1,0 +1,3 @@
+Выпадающие списки - https://github.com/k-kokhanenko/bhj-homeworks/blob/master/event-object/dropdown/task.js - ГОТОВО
+Соло на клавиатуре - https://github.com/k-kokhanenko/bhj-homeworks/blob/master/event-object/keysolo/task.js - НЕ СДЕЛАЛ
+Вкладки - https://github.com/k-kokhanenko/bhj-homeworks/blob/master/event-object/tabs/task.js - НЕ СДЕЛАЛ
