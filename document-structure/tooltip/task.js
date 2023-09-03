@@ -1,6 +1,6 @@
 
 document.addEventListener("DOMContentLoaded", () => {
-    document.querySelectorAll('.has-tooltip').forEach(function(item) {    
+    document.querySelectorAll('.has-tooltip').forEach(function(item, index) {    
         const div = document.createElement('div');
         div.classList.add('tooltip');        
         item.parentNode.insertBefore(div, item.nextSibling);
@@ -8,8 +8,11 @@ document.addEventListener("DOMContentLoaded", () => {
         item.addEventListener( "click" , (event) => {
             event.preventDefault();
             
-            document.querySelectorAll('.tooltip_active').forEach(function(el) {   
-                el.classList.remove('tooltip_active');
+            console.log('index - ' + index);
+            document.querySelectorAll('.tooltip').forEach(function(item2, index2) {   
+                if (index != index2 && item2.classList.contains('tooltip_active')) {
+                    item2.classList.remove('tooltip_active');
+                }
             }); 
             
             let rect = item.getBoundingClientRect();          
