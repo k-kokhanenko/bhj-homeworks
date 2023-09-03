@@ -2,56 +2,62 @@ document.addEventListener("DOMContentLoaded", () => {
     const input = document.getElementById('task__input');
     const tasks = document.getElementById('tasks__list');
 
-    function addNewTask(info, save = false) {
+    function addNewTask(id, info, save = false) {
         if (tasks) {
             const task = document.createElement('div');
+            task.id = id;
             task.className = 'task';
             task.innerHTML = `<div class="task__title">${info}</div><a href="#" class="task__remove">&times;</a>`;
             tasks.appendChild(task);    
-
+    
             if (save) {
-                let tasksList = [];
-                if (localStorage.getItem('tasks') !== null) {                    
-                    tasksList = JSON.parse(localStorage.getItem('tasks'));                   
+                localStorage.setItem(`task-${id}`, info); 
+
+                const count = localStorage.getItem('tasksCount');
+                if (count !== null) {
+                    localStorage.setItem('tasksCount', count+1);             
+                } else {
+                    localStorage.setItem('tasksCount', 1);             
                 }
-                
-                tasksList.push(info);
-                localStorage.setItem('tasks', JSON.stringify(tasksList));
 
                 task.addEventListener("click" , (event) => {
                     event.preventDefault();
                     deleteTask(event.target.parentNode);
                 });
-            }
+            }    
         }
     }
 
     function deleteTask(element) {        
         if (element) {
+            localStorage.clear();
             element.remove();
-            
-            let tasksList = [];
-            const task = tasks.getElementsByClassName('task');
-            for (let i = 0; i < task.length; i++) {
-                tasksList.push(task[i].children[0].textContent);                
+
+            const taskList = tasks.getElementsByClassName('task');
+            for (let i = 0; i < taskList.length; i++) {
+                taskList[i].id = i;
+                localStorage.setItem(`task-${i}`, taskList[i].children[0].textContent); 
             }
 
-            localStorage.clear();
-            localStorage.setItem(`tasks`, JSON.stringify(tasksList)); 
+            if (taskList.length > 0)
+                localStorage.setItem('tasksCount', tasks.childElementCount);                       
         }
     }
   
-    if (localStorage.getItem('tasks') !== null) {
-        let tasksList = JSON.parse(localStorage.tasks);
-        for (let i = 0; i < tasksList.length; i++) {
-            addNewTask(tasksList[i]);
+    let taskCount = localStorage.getItem('tasksCount');
+    if (taskCount !== null) {
+        for (let i = 0; i < taskCount; i++) {
+            let taskInfo = localStorage.getItem(`task-${i}`);
+            if (taskInfo !== null) {
+                addNewTask(i, taskInfo);
+            }
         }
     }
 
     document.getElementById('tasks__add').addEventListener("click" , (event) => {
         event.preventDefault();
         if (input.value.trim()) {            
-            addNewTask(input.value, true);
+            addNewTask(tasks.childElementCount, input.value, true);
             input.value = '';
             input.focus();
         }
