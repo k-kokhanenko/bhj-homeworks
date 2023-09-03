@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
         let value = Number(parent.children[1].textContent.trim());
 
         add ? value++ : value--;
-        if (value < 0)
+        if (value < 1)
             value = 1;
 
         parent.children[1].textContent = value;
